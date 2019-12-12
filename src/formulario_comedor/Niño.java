@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Niño extends JFrame implements ActionListener {
+public class Niño extends JFrame implements ActionListener, FocusListener {
 	JLabel titulo, lNombre, lAula, lTutor, lNacimiento, lMenu, lAlergias;
 	JTextField txtNombre, txtApa, txtAma, txtAula, txtTutor, txtNacimiento, txtMenu, txtAlergias;
 	JButton btnAgregar, btnActualizar, btnQuitar, btnConsultar;
@@ -113,6 +115,15 @@ public class Niño extends JFrame implements ActionListener {
 		btnConsultar.setBounds(x*73, y*73, x*15, y*5);
 		btnConsultar.addActionListener(this);
 		add(btnConsultar);
+	
+		txtNombre.addFocusListener(this);
+		txtApa.addFocusListener(this);
+		txtAma.addFocusListener(this);
+		txtAula.addFocusListener(this);
+		txtTutor.addFocusListener(this);
+		txtNacimiento.addFocusListener(this);
+		txtMenu.addFocusListener(this);
+		txtAlergias.addFocusListener(this);
 		
 		setVisible(true);
 	}
@@ -151,8 +162,8 @@ public class Niño extends JFrame implements ActionListener {
 			ResultSet rs2 = st2.executeQuery();
 			PreparedStatement st3 = con.prepareStatement(proc2);
 			ResultSet rs3 = st3.executeQuery();
-			alergias = llamarProc(con, n.nombre, n.apaterno, n.amaterno, proc1, rs2);
-			menus = llamarProc(con, n.nombre, n.apaterno, n.amaterno, proc2, rs3);
+			alergias = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "alergiasNiñoConcatenadas", rs2);
+			menus = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "menuNiñoConcatenadas", rs3);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,21 +172,43 @@ public class Niño extends JFrame implements ActionListener {
 		txtMenu.setText(menus);
 		txtAlergias.setText(alergias);
 	}
-
-	private static String llamarProc(Connection con, String nombre, String apa, String ama, String select, ResultSet rs) throws SQLException
+	
+	private void EliminarAlMorro() 
 	{
-		System.out.println("damn");
-		CallableStatement cst = con.prepareCall("{call alergiasNiñoConcatenadas (?, ?, ?, ?)}");
+		String nom, apa, ama;
+		nom = txtNombre.getText();
+		apa = txtApa.getText();
+		ama = txtAma.getText();
+		try
+		{
+			NiñoObjeto n = DBNiño.leeNiño(txtNombre.getText(), txtApa.getText(), txtAma.getText());
+			eliminarAlumno(n);
+		} catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(this.getParent(), "No se pudo eliminar al tutor llamado " + nom + " " + apa + " " + ama, "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		JOptionPane.showMessageDialog(this.getParent(), "El tutor llamado " + nom + " " + apa + " " + ama +" ha sido eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public static void eliminarAlumno(NiñoObjeto n) throws SQLException
+	{
+		Connection con = DBConexion.GetConnection();
+		String query = "DELETE FROM niño WHERE nombre+apaterno+amaterno = '" + n.nombre + n.apaterno + n.amaterno + "'";
+		PreparedStatement st = con.prepareStatement(query);
+		st.executeUpdate();
+	}	
+
+	private static String llamarProc(Connection con, String nombre, String apa, String ama, String sp, ResultSet rs) throws SQLException
+	{
+		CallableStatement cst = con.prepareCall("{call "+sp+" (?, ?, ?, ?)}");
 		cst.registerOutParameter(4, java.sql.Types.NVARCHAR);
 		cst.setString(1, nombre);
 		cst.setString(2, apa);
 		cst.setString(3, ama);		
 		cst.setEscapeProcessing(true);
-		System.out.println(6);
 		cst.execute();
-		System.out.println(7);
-		System.out.println(cst.getString(1));
-		return cst.getString(1);
+		return cst.getString(4);
 	}
 
 	@Override
@@ -194,5 +227,43 @@ public class Niño extends JFrame implements ActionListener {
 			return;
 		}
 	}
-
+	public void focusGained(FocusEvent e) {
+		if(e.getSource() == txtNombre) {
+			txtNombre.selectAll();
+			return;
+		}
+		if(e.getSource() == txtApa) {
+			txtApa.selectAll();
+			return;
+		}
+		if(e.getSource() == txtAma) {
+			txtAma.selectAll();
+			return;
+		}
+		if(e.getSource() == txtAula) {
+			txtAula.selectAll();
+			return;
+		}
+		if(e.getSource() == txtNacimiento) {
+			txtNacimiento.selectAll();
+			return;
+		}
+		if(e.getSource() == txtTutor) {
+			txtTutor.selectAll();
+			return;
+		}
+		if(e.getSource() == txtAlergias) {
+			txtAlergias.selectAll();
+			return;
+		}
+		if(e.getSource() == txtMenu) {
+			txtMenu.selectAll();
+			return;
+		}
+	}
+	@Override
+	public void focusLost(FocusEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

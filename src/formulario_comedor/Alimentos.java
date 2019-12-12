@@ -1,7 +1,6 @@
 package formulario_comedor;
 
 import java.awt.Font;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,8 +31,6 @@ public class Alimentos extends JFrame{
 		titulo.setHorizontalAlignment(JLabel.CENTER);
 		add(titulo);
 		titulo.setBounds(0, 0, w, 50);
-		
-		Font fPlain = new Font("Arial", Font.PLAIN, 15);
 		
 		//tabla
 		encabezado = new String[] {"Nombre", "Tipo", "Calorias", "Carbohidratos", "Proteinas", "Grasas", "Porciones restantes"};
@@ -103,34 +100,5 @@ public class Alimentos extends JFrame{
 		return reg;
 	}
 	
-	private static String llamarProc(Connection con, String nombre, String apa, String ama, String select, ResultSet rs) throws SQLException
-	{
-		System.out.println("damn");
-		CallableStatement cst = con.prepareCall("{? = call alergiasNiñoConcatenadas (?, ?, ?)}");
-		cst.registerOutParameter(1, java.sql.Types.NVARCHAR);
-		cst.setString(2, nombre);
-		cst.setString(3, apa);
-		cst.setString(4, ama);		
-		cst.setEscapeProcessing(true);
-		cst.execute();
-		System.out.println(cst.getString(1));
-		return cst.getString(1);
-	}
-
-	public static int getMaxID() throws SQLException
-	{
-		Connection con = DBConexion.GetConnection();
-		String select = "SELECT max(id) FROM niño";
-		PreparedStatement st = con.prepareStatement(select);
-		ResultSet rs = st.executeQuery();
-		int Clave = 1;
-		if(!rs.wasNull())
-		{
-			rs.next();
-			Clave = rs.getInt(1)+1;
-		}
-		con.close();
-		return Clave;
-	}
 
 }
