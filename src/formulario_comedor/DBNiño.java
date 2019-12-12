@@ -36,23 +36,9 @@ public class DBNiño extends DBConexion
 		reg.grado = rs.getString(6);
 		reg.idTutor = rs.getInt(7);
 		reg.nacimiento = rs.getString(8);
-		reg.tutor = rs.getString(9);
+		reg.tutorNombre = rs.getString(9);
+		reg.tutorApaterno = rs.getString(9);
+		reg.tutorAmaterno = rs.getString(9);
 		return reg;
-	}
-	
-	public static int getMaxID() throws SQLException
-	{
-		Connection con = GetConnection();
-		String select = "SELECT max(id) FROM niño";
-		PreparedStatement st = con.prepareStatement(select);
-		ResultSet rs = st.executeQuery();
-		int Clave = 1;
-		if(!rs.wasNull())
-		{
-			rs.next();
-			Clave = rs.getInt(1)+1;
-		}
-		con.close();
-		return Clave;
 	}
 }

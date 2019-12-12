@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 
 public class Niño extends JFrame implements ActionListener, FocusListener {
 	JLabel titulo, lNombre, lAula, lTutor, lNacimiento, lMenu, lAlergias;
-	JTextField txtNombre, txtApa, txtAma, txtAula, txtTutor, txtNacimiento, txtMenu, txtAlergias;
+	JTextField txtNombre, txtApa, txtAma, txtAula, txtTutorN, txtTutorAp, txtTutorAm, txtNacimiento, txtMenu, txtAlergias;
 	JButton btnAgregar, btnActualizar, btnQuitar, btnConsultar;
 	
 	public Niño(int w, int h) {
@@ -67,9 +67,15 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 		lTutor.setFont(fBold);
 		lTutor.setBounds(x*5, y*25, x*10, y*10);
 		add(lTutor);
-		txtTutor = new JTextField();
-		txtTutor.setBounds(x*15, y*25, x*50, y*10);
-		add(txtTutor);
+		txtTutorN = new JTextField();
+		txtTutorN.setBounds(x*15, y*25, x*20, y*10);
+		add(txtTutorN);
+		txtTutorAp = new JTextField();
+		txtTutorAp.setBounds(x*35, y*25, x*15, y*10);
+		add(txtTutorAp);
+		txtTutorAm = new JTextField();
+		txtTutorAm.setBounds(x*50, y*25, x*15, y*10);
+		add(txtTutorAm);
 
 		lNacimiento= new JLabel("Nacimiento");
 		lNacimiento.setFont(fBold);
@@ -120,7 +126,9 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 		txtApa.addFocusListener(this);
 		txtAma.addFocusListener(this);
 		txtAula.addFocusListener(this);
-		txtTutor.addFocusListener(this);
+		txtTutorN.addFocusListener(this);
+		txtTutorAp.addFocusListener(this);
+		txtTutorAm.addFocusListener(this);
 		txtNacimiento.addFocusListener(this);
 		txtMenu.addFocusListener(this);
 		txtAlergias.addFocusListener(this);
@@ -146,7 +154,9 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 		txtApa.setText(n.apaterno);
 		txtAma.setText(n.amaterno);
 		txtAula.setText(n.nivel+n.grado);
-		txtTutor.setText(n.tutor+"");
+		txtTutorN.setText(n.tutorNombre+"");
+		txtTutorAp.setText(n.tutorApaterno+"");
+		txtTutorAm.setText(n.tutorAmaterno+"");
 		txtNacimiento.setText(n.nacimiento);
 		Connection con = DBConexion.GetConnection();
 		String proc1 = "declare @alergias NVARCHAR(200) " + 
@@ -162,8 +172,8 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 			ResultSet rs2 = st2.executeQuery();
 			PreparedStatement st3 = con.prepareStatement(proc2);
 			ResultSet rs3 = st3.executeQuery();
-			alergias = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "alergiasNiñoConcatenadas", rs2);
-			menus = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "menuNiñoConcatenadas", rs3);
+			alergias = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "alergiasNiñoConcatenadas", rs2, java.sql.Types.NVARCHAR);
+			menus = llamarProc(con, n.nombre, n.apaterno, n.amaterno, "menuNiñoConcatenadas", rs3, java.sql.Types.NVARCHAR);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,10 +195,10 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 			eliminarAlumno(n);
 		} catch (SQLException e)
 		{
-			JOptionPane.showMessageDialog(this.getParent(), "No se pudo eliminar al tutor llamado " + nom + " " + apa + " " + ama, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this.getParent(), "No se pudo eliminar al niño llamado " + nom + " " + apa + " " + ama, "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		JOptionPane.showMessageDialog(this.getParent(), "El tutor llamado " + nom + " " + apa + " " + ama +" ha sido eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this.getParent(), "El niño llamado " + nom + " " + apa + " " + ama +" ha sido eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public static void eliminarAlumno(NiñoObjeto n) throws SQLException
@@ -198,11 +208,23 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 		PreparedStatement st = con.prepareStatement(query);
 		st.executeUpdate();
 	}	
+	
+	public void actualizarAlumno() throws SQLException {
+		Connection con = DBConexion.GetConnection();
+		String tnombre = txtTutorN.getText(), tapaterno = txtTutorAp.getText(), tamaterno = txtTutorAm.getText();
+		String sp = "declare @alergias NVARCHAR(200) " + 
+				"exec alergiasNiñoConcatenadas '"+tnombre+"', '"+tapaterno+"', '"+tamaterno+"', @alergias OUTPUT " + 
+				"SELECT @alergias";
+		PreparedStatement st = con.prepareStatement(sp);
+		ResultSet rs = st.executeQuery();
+		int id = Integer.parseInt(llamarProc(con, tnombre, tapaterno, tamaterno, "devuelveIDTutor", rs, java.sql.Types.INTEGER));
+		System.out.println(id);
+	}
 
-	private static String llamarProc(Connection con, String nombre, String apa, String ama, String sp, ResultSet rs) throws SQLException
+	private static String llamarProc(Connection con, String nombre, String apa, String ama, String sp, ResultSet rs, int tipo) throws SQLException
 	{
 		CallableStatement cst = con.prepareCall("{call "+sp+" (?, ?, ?, ?)}");
-		cst.registerOutParameter(4, java.sql.Types.NVARCHAR);
+		cst.registerOutParameter(4, tipo);
 		cst.setString(1, nombre);
 		cst.setString(2, apa);
 		cst.setString(3, ama);		
@@ -217,9 +239,15 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 			return;
 		}
 		if(e.getSource() == btnActualizar) {
+			try {
+				actualizarAlumno();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			return;
 		}
 		if(e.getSource() == btnQuitar) {
+			EliminarAlMorro();
 			return;
 		}
 		if(e.getSource() == btnConsultar) {
@@ -248,8 +276,16 @@ public class Niño extends JFrame implements ActionListener, FocusListener {
 			txtNacimiento.selectAll();
 			return;
 		}
-		if(e.getSource() == txtTutor) {
-			txtTutor.selectAll();
+		if(e.getSource() == txtTutorN) {
+			txtTutorN.selectAll();
+			return;
+		}
+		if(e.getSource() == txtTutorAp) {
+			txtTutorAp.selectAll();
+			return;
+		}
+		if(e.getSource() == txtTutorAm) {
+			txtTutorAm.selectAll();
 			return;
 		}
 		if(e.getSource() == txtAlergias) {
