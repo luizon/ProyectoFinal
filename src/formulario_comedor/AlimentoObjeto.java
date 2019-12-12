@@ -1,9 +1,9 @@
 package formulario_comedor;
 
 public class AlimentoObjeto {
-	String Nombre, Tipo;
+	String nombre, tipo;
 	int id, PorcionesRestantes;
-	double Calorias, Carbohidratos, Proteinas, Grasas;
+	double calorias, carbohidratos, proteinas, grasas;
 	public AlimentoObjeto() {
 		
 	}

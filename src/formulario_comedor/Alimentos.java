@@ -73,12 +73,12 @@ public class Alimentos extends JFrame{
 		{
 			AlimentoObjeto reg = crearObjeto(rs);
 			renglon[0] = "" + reg.id;
-			renglon[1] = "" + reg.Nombre;
-			renglon[2] = "" + reg.Tipo;
-			renglon[3] = "" + reg.Calorias;
-			renglon[4] = "" + reg.Carbohidratos;
-			renglon[5] = "" + reg.Proteinas;
-			renglon[6] = "" + reg.Grasas;
+			renglon[1] = "" + reg.nombre;
+			renglon[2] = "" + reg.tipo;
+			renglon[3] = "" + reg.calorias;
+			renglon[4] = "" + reg.carbohidratos;
+			renglon[5] = "" + reg.proteinas;
+			renglon[6] = "" + reg.grasas;
 			renglon[7] = "" + reg.PorcionesRestantes;
 
 			dtm.addRow(renglon);
@@ -90,12 +90,12 @@ public class Alimentos extends JFrame{
 	{
 		AlimentoObjeto reg = new AlimentoObjeto();
 		reg.id = rs.getInt(1);
-		reg.Nombre = rs.getString(2);
-		reg.Tipo = rs.getString(3);
-		reg.Calorias = rs.getDouble(4);
-		reg.Carbohidratos = rs.getDouble(5);
-		reg.Proteinas = rs.getDouble(6);
-		reg.Grasas = rs.getDouble(7);
+		reg.nombre = rs.getString(2);
+		reg.tipo = rs.getString(3);
+		reg.calorias = rs.getDouble(4);
+		reg.carbohidratos = rs.getDouble(5);
+		reg.proteinas = rs.getDouble(6);
+		reg.grasas = rs.getDouble(7);
 		reg.PorcionesRestantes = rs.getInt(8);
 		return reg;
 	}
