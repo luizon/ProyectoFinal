@@ -46,10 +46,10 @@ public class DBTutores extends DBConexion
 		st.executeUpdate();
 	}
 	
-	public static void updateTutoreS(int id, String nombre, String apa, String ama, String trabajo, int telefonoTrabajo, int telefonoCelular) throws SQLException
+	public static void updateTutores(String nombre, String apa, String ama, String trabajo, int telefonoTrabajo, int telefonoCelular) throws SQLException
 	{
 		Connection con = GetConnection();
-		String query = "update tutor set nombre = \'"+nombre+"\', apaterno = \'"+apa+"\', amaterno =\'"+ama+"\', lugar_de_trabajo =\'"+trabajo+"\', telefono_trabajo ="+telefonoTrabajo+", telefono_celular ="+telefonoCelular+" where id = " + id;
+		String query = "update tutor set nombre = \'"+nombre+"\', apaterno = \'"+apa+"\', amaterno =\'"+ama+"\', lugar_de_trabajo =\'"+trabajo+"\', telefono_trabajo ="+telefonoTrabajo+", telefono_celular ="+telefonoCelular+" WHERE nombre+apaterno+amaterno = '" + nombre + apa + ama + "'";
 		PreparedStatement st = con.prepareStatement(query);
 		st.executeUpdate();
 	}

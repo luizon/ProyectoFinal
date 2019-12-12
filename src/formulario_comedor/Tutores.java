@@ -266,12 +266,12 @@ public class Tutores extends JFrame implements ActionListener, FocusListener
 	{
 		try
 		{
-			DBTutores.updateTutoreS(txtNombre.getText(), txtApa.getText(), txtAma.getText(), txttrabajo.getText(), Integer.valueOf(txtteltrabajo.getText()), Integer.valueOf(txtcel.getText()));
-			JOptionPane.showConfirmDialog(this.getParent(), "Tutor actualizado con éxito");
+			DBTutores.updateTutores(txtNombre.getText(), txtApa.getText(), txtAma.getText(), txttrabajo.getText(), Integer.valueOf(txtteltrabajo.getText()), Integer.valueOf(txtcel.getText()));
+			JOptionPane.showMessageDialog(this.getParent(), "Tutor actualizado con éxito");
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			JOptionPane.showConfirmDialog(this.getParent(), "No se pudo actualizar tutor", "Ya sé que no tienen sentido las otras opciones, nomás ando viendo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this.getParent(), "No se pudo actualizar tutor", "Ya sé que no tienen sentido las otras opciones, nomás ando viendo", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
