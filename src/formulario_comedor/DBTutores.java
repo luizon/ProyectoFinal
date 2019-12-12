@@ -38,14 +38,21 @@ public class DBTutores extends DBConexion
 		return reg;
 	}
 
-	private static void insertTutores(int id, String nombre, String apa, String ama, String trabajo, int telefonoTrabajo, int telefonoCelular) throws SQLException
+	public static void insertTutores(String nombre, String apa, String ama, String trabajo, int telefonoTrabajo, int telefonoCelular) throws SQLException
 	{
 		Connection con = GetConnection();
-		String query = "insert into tutor(nombre, apaterno, amaterno, lugar_de_trabajo, telefono_trabajo, telefono_celular) values(" + id + ",\'" + nombre + "\',\'" + apa + "\',\'" + ama + "\',\'" + trabajo + "\'," + telefonoTrabajo + "," + telefonoCelular + ")";
+		String query = "insert into tutor(nombre, apaterno, amaterno, lugar_de_trabajo, telefono_trabajo, telefono_celular) values(\'" + nombre + "\',\'" + apa + "\',\'" + ama + "\',\'" + trabajo + "\'," + telefonoTrabajo + "," + telefonoCelular + ")";
 		PreparedStatement st = con.prepareStatement(query);
 		st.executeUpdate();
 	}
-
+	
+	public static void updateTutoreS(int id, String nombre, String apa, String ama, String trabajo, int telefonoTrabajo, int telefonoCelular) throws SQLException
+	{
+		Connection con = GetConnection();
+		String query = "update tutor set nombre = \'"+nombre+"\', apaterno = \'"+apa+"\', amaterno =\'"+ama+"\', lugar_de_trabajo =\'"+trabajo+"\', telefono_trabajo ="+telefonoTrabajo+", telefono_celular ="+telefonoCelular+" where id = " + id;
+		PreparedStatement st = con.prepareStatement(query);
+		st.executeUpdate();
+	}
 	public static int getMaxID() throws SQLException
 	{
 		Connection con = GetConnection();

@@ -19,7 +19,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class Tutores extends JFrame implements ActionListener, FocusListener{
+public class Tutores extends JFrame implements ActionListener, FocusListener
+{
 
 	JLabel titulo, lNombre, ladeudo, lcelular, ltrabajo, lteltrabajo, lhijos;
 	JTextField txtNombre, txtApa, txtAma, txtadeudo, txtcel, txttrabajo, txtteltrabajo;
@@ -27,11 +28,12 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 	String[] encabezado;
 	JTable tabla;
 	DefaultTableModel modelotabla;
-	
-	public Tutores(int w, int h) {
+
+	public Tutores(int w, int h)
+	{
 		super("Tutor");
 		setSize(w, h);
-		int x = w/100, y = h/100;
+		int x = w / 100, y = h / 100;
 		setLayout(null);
 		setLocationRelativeTo(null);
 		titulo = new JLabel("Formulario de tutores");
@@ -40,69 +42,71 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 		titulo.setHorizontalAlignment(JLabel.CENTER);
 		add(titulo);
 		titulo.setBounds(0, 0, w, 50);
-		
+
 		Font fPlain = new Font("Arial", Font.PLAIN, 15);
 		lNombre = new JLabel("Nombre");
 		lNombre.setFont(fBold);
-		lNombre.setBounds(x*5, y*10, x*10, y*10);
+		lNombre.setBounds(x * 5, y * 10, x * 10, y * 10);
 		add(lNombre);
 		txtNombre = new JTextField("Douglas");
-		txtNombre.setBounds(x*15, y*10, x*20, y*10);
+		txtNombre.setBounds(x * 15, y * 10, x * 20, y * 10);
 		add(txtNombre);
 		txtApa = new JTextField("Steger");
-		txtApa.setBounds(x*35, y*10, x*15, y*10);
+		txtApa.setBounds(x * 35, y * 10, x * 15, y * 10);
 		add(txtApa);
 		txtAma = new JTextField("Kraus");
-		txtAma.setBounds(x*50, y*10, x*15, y*10);
+		txtAma.setBounds(x * 50, y * 10, x * 15, y * 10);
 		add(txtAma);
 
-		ladeudo = new JLabel("Adeudo"); 
+		ladeudo = new JLabel("Adeudo");
 		ladeudo.setFont(fBold);
-		ladeudo.setBounds(x*70, y*10, x*10, y*10);
+		ladeudo.setBounds(x * 70, y * 10, x * 10, y * 10);
 		add(ladeudo);
 		txtadeudo = new JTextField();
-		txtadeudo.setBounds(x*80, y*10, x*10, y*10);
+		txtadeudo.setBounds(x * 80, y * 10, x * 10, y * 10);
 		add(txtadeudo);
-		
+
 		lcelular = new JLabel("Tel. Celular");
 		lcelular.setFont(fBold);
-		lcelular.setBounds(x*5, y*25, x*10, y*10);
+		lcelular.setBounds(x * 5, y * 25, x * 10, y * 10);
 		add(lcelular);
 		txtcel = new JTextField();
-		txtcel.setBounds(x*15, y*25, x*50, y*10);
+		txtcel.setBounds(x * 15, y * 25, x * 50, y * 10);
 		add(txtcel);
 
-		ltrabajo= new JLabel("Lugar de trabajo");
+		ltrabajo = new JLabel("Lugar de trabajo");
 		ltrabajo.setFont(fBold);
-		ltrabajo.setBounds(x*5, y*40, x*10, y*10);
+		ltrabajo.setBounds(x * 5, y * 40, x * 10, y * 10);
 		add(ltrabajo);
 		txttrabajo = new JTextField();
-		txttrabajo.setBounds(x*15, y*40, x*50, y*10);
+		txttrabajo.setBounds(x * 15, y * 40, x * 50, y * 10);
 		add(txttrabajo);
 
 		lteltrabajo = new JLabel("Tel. de trabajo");
 		lteltrabajo.setFont(fBold);
-		lteltrabajo.setBounds(x*5, y*55, x*10, y*10);
+		lteltrabajo.setBounds(x * 5, y * 55, x * 10, y * 10);
 		add(lteltrabajo);
 		txtteltrabajo = new JTextField();
-		txtteltrabajo.setBounds(x*15, y*55, x*50, y*10);
+		txtteltrabajo.setBounds(x * 15, y * 55, x * 50, y * 10);
 		add(txtteltrabajo);
-		
+
 		lhijos = new JLabel("Hijos");
 		lhijos.setFont(fBold);
-		lhijos.setBounds(x*5, y*70, x*10, y*10);
+		lhijos.setBounds(x * 5, y * 70, x * 10, y * 10);
 		add(lhijos);
-		/*txthijos = new JTextField();
-		txthijos.setBounds(x*15, y*70, x*50, y*10);
-		add(txthijos);*/
-		
-		//tabla
-		encabezado = new String[] {"Nombre", "Apellido P", "Apellido M", "Aula"};
-		modelotabla = new DefaultTableModel(encabezado,0);
+		/*
+		 * txthijos = new JTextField(); txthijos.setBounds(x*15, y*70, x*50, y*10);
+		 * add(txthijos);
+		 */
+
+		// tabla
+		encabezado = new String[] { "Nombre", "Apellido P", "Apellido M", "Aula" };
+		modelotabla = new DefaultTableModel(encabezado, 0);
 		tabla = new JTable()
 		{
 			private static final long serialVersionUID = 1L;
-			boolean editable[] = new boolean[] {false,false,false,false,false};
+			boolean editable[] = new boolean[] { false, false, false, false, false };
+
 			public boolean isCellEditable(int rowIndex, int columnIndex)
 			{
 				return editable[columnIndex];
@@ -114,31 +118,30 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 		tabla.setFocusable(false);
 		JScrollPane scroll = new JScrollPane(tabla);
 		add(scroll);
-		scroll.setBounds(x*15, y*70, x*50, y*20);
-		
-		
+		scroll.setBounds(x * 15, y * 70, x * 50, y * 20);
+
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setFont(fBold);
-		btnAgregar.setBounds(x*73, y*55, x*15, y*5);
+		btnAgregar.setBounds(x * 73, y * 55, x * 15, y * 5);
 		add(btnAgregar);
 		btnQuitar = new JButton("Quitar");
 		btnQuitar.setFont(fBold);
-		btnQuitar.setBounds(x*73, y*61, x*15, y*5);
+		btnQuitar.setBounds(x * 73, y * 61, x * 15, y * 5);
 		add(btnQuitar);
 		btnActualizar = new JButton("Actualizar");
 		btnActualizar.setFont(fBold);
-		btnActualizar.setBounds(x*73, y*67, x*15, y*5);
+		btnActualizar.setBounds(x * 73, y * 67, x * 15, y * 5);
 		add(btnActualizar);
 		btnConsultar = new JButton("Consultar");
 		btnConsultar.setFont(fBold);
-		btnConsultar.setBounds(x*73, y*73, x*15, y*5);
+		btnConsultar.setBounds(x * 73, y * 73, x * 15, y * 5);
 		add(btnConsultar);
-		
+
 		btnAgregar.addActionListener(this);
 		btnQuitar.addActionListener(this);
 		btnActualizar.addActionListener(this);
 		btnConsultar.addActionListener(this);
-	
+
 		txtNombre.addFocusListener(this);
 		txtApa.addFocusListener(this);
 		txtAma.addFocusListener(this);
@@ -146,10 +149,11 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 		txtcel.addFocusListener(this);
 		txttrabajo.addFocusListener(this);
 		txtteltrabajo.addFocusListener(this);
-		
+
 		setVisible(true);
 	}
-	//al 100 compa
+
+	// al 100 compa
 	private void buscarNombre()
 	{
 		try
@@ -162,33 +166,36 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 			JOptionPane.showMessageDialog(this.getParent(), "No se encontró un tutor llamado " + n + " " + apa + " " + ama, "Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	//falta
+
+	// falta
 	private void actualizarDatos(TutorObjeto n)
 	{
 		txtNombre.setText(n.nombre);
 		txtApa.setText(n.apaterno);
 		txtAma.setText(n.amaterno);
-		txtadeudo.setText(n.adeudo+"");//esperar
-		txtcel.setText(n.cel+"");
+		txtadeudo.setText(n.adeudo + "");// esperar
+		txtcel.setText(n.cel + "");
 		txttrabajo.setText(n.Trabajo);
-		txtteltrabajo.setText(n.telTrabajo+"");
-		
-		try {
+		txtteltrabajo.setText(n.telTrabajo + "");
+
+		try
+		{
 			modelotabla = llenarTabla(n.id);
 			tabla.setModel(modelotabla);
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
 	public static DefaultTableModel llenarTabla(int id) throws SQLException
 	{
-		String encabezado[] = {"Nombre", "Apellido P", "Apellido M", "Aula"};
+		String encabezado[] = { "Nombre", "Apellido P", "Apellido M", "Aula" };
 		String renglon[] = new String[19];
 		DefaultTableModel dtm = new DefaultTableModel(encabezado, 0);
-		
+
 		Connection con = DBConexion.GetConnection();
-		String select = "SELECT * FROM niño WHERE id_tutor = "+id+"";
+		String select = "SELECT * FROM niño WHERE id_tutor = " + id + "";
 		PreparedStatement st = con.prepareStatement(select);
 		ResultSet rs = st.executeQuery();
 
@@ -216,7 +223,7 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 		return reg;
 	}
 
-	private void eliminarAlPadrino() 
+	private void eliminarAlPadrino()
 	{
 		String nom, apa, ama;
 		nom = txtNombre.getText();
@@ -231,9 +238,9 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 			JOptionPane.showMessageDialog(this.getParent(), "No se pudo eliminar al tutor llamado " + nom + " " + apa + " " + ama, "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		JOptionPane.showMessageDialog(this.getParent(), "El tutor llamado " + nom + " " + apa + " " + ama +" ha sido eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this.getParent(), "El tutor llamado " + nom + " " + apa + " " + ama + " ha sido eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	public static void eliminarUsuario(TutorObjeto n) throws SQLException
 	{
 		Connection con = DBConexion.GetConnection();
@@ -241,58 +248,102 @@ public class Tutores extends JFrame implements ActionListener, FocusListener{
 		PreparedStatement st = con.prepareStatement(query);
 		st.executeUpdate();
 	}
-	
+
+	private void agregarAlPadrino()
+	{
+		try
+		{
+			DBTutores.insertTutores(txtNombre.getText(), txtApa.getText(), txtAma.getText(), txttrabajo.getText(), Integer.valueOf(txtteltrabajo.getText()), Integer.valueOf(txtcel.getText()));
+			JOptionPane.showConfirmDialog(this.getParent(), "Tutor agregado con éxito");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			JOptionPane.showConfirmDialog(this.getParent(), "No se pudo agregar tutor", "Ya sé que no tienen sentido las otras opciones, nomás ando viendo", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void actualizarAlPadrino()
+	{
+		try
+		{
+			DBTutores.updateTutoreS(txtNombre.getText(), txtApa.getText(), txtAma.getText(), txttrabajo.getText(), Integer.valueOf(txtteltrabajo.getText()), Integer.valueOf(txtcel.getText()));
+			JOptionPane.showConfirmDialog(this.getParent(), "Tutor actualizado con éxito");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			JOptionPane.showConfirmDialog(this.getParent(), "No se pudo actualizar tutor", "Ya sé que no tienen sentido las otras opciones, nomás ando viendo", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnAgregar) {
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getSource() == btnAgregar)
+		{
+			agregarAlPadrino();
 			return;
 		}
-		if(e.getSource() == btnActualizar) {
+		if (e.getSource() == btnActualizar)
+		{
+			actualizarAlPadrino();
 			return;
 		}
-		if(e.getSource() == btnQuitar) {
+		if (e.getSource() == btnQuitar)
+		{
 			eliminarAlPadrino();
 			return;
 		}
-		if(e.getSource() == btnConsultar) {
+		if (e.getSource() == btnConsultar)
+		{
 			buscarNombre();
 			return;
 		}
 	}
+
 	@Override
-	public void focusGained(FocusEvent e) {
-		if(e.getSource() == txtNombre) {
+	public void focusGained(FocusEvent e)
+	{
+		if (e.getSource() == txtNombre)
+		{
 			txtNombre.selectAll();
 			return;
 		}
-		if(e.getSource() == txtApa) {
+		if (e.getSource() == txtApa)
+		{
 			txtApa.selectAll();
 			return;
 		}
-		if(e.getSource() == txtAma) {
+		if (e.getSource() == txtAma)
+		{
 			txtAma.selectAll();
 			return;
 		}
-		if(e.getSource() == txtadeudo) {
+		if (e.getSource() == txtadeudo)
+		{
 			txtadeudo.selectAll();
 			return;
 		}
-		if(e.getSource() == txtcel) {
+		if (e.getSource() == txtcel)
+		{
 			txtcel.selectAll();
 			return;
 		}
-		if(e.getSource() == txttrabajo) {
+		if (e.getSource() == txttrabajo)
+		{
 			txttrabajo.selectAll();
 			return;
 		}
-		if(e.getSource() == txtteltrabajo) {
+		if (e.getSource() == txtteltrabajo)
+		{
 			txtteltrabajo.selectAll();
 			return;
 		}
 	}
+
 	@Override
-	public void focusLost(FocusEvent arg0) {
+	public void focusLost(FocusEvent arg0)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }
